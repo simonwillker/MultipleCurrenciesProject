@@ -1,0 +1,20 @@
+trigger PriceTrigger on Price__c (before insert,before update) {
+                                     
+    // トリガーのスキップ判定
+    if(TriggerContextObject.isSkip('PriceTrigger')){
+        System.debug('###PriceTrigger is Skip###');
+        return;
+    }
+    
+    // ハンドラ
+    PriceTriggerHandler handler = new PriceTriggerHandler();
+    if(Trigger.isBefore){
+        if(Trigger.isInsert){
+            handler.OnBeforeInsert(Trigger.new);
+        }else if(Trigger.isUpdate){
+            handler.OnBeforeUpdate(Trigger.new, Trigger.oldMap);
+        }else{
+            
+        }
+    }
+}
